@@ -1,112 +1,101 @@
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import Profilephoto from "./shared/Profilephoto";
-import { Images } from "lucide-react";
-import { useRef, useState } from "react";
-import { readFileAsDataUrl } from "@/lib/utils";
-import Image from "next/image";
-import { createPostAction } from "@/lib/serveractions";
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
+import ProfilePhoto from "./shared/Profilephoto"
+import { Textarea } from "./ui/textarea"
+import { Images } from "lucide-react"
+import { useRef, useState } from "react"
+import { readFileAsDataUrl } from "@/lib/utils"
+import Image from "next/image"
+import { createPostAction } from "@/lib/serveractions"
+import { toast } from "sonner"
 
-const PostDilog = ({
-  setOpen,
-  open,
-  src,
-}: {
-  open: any;
-  setOpen: any;
-  src: string;
-}) => {
-  const inputref = useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = useState<string>("");
-  const [inputText, setInputText] = useState<string>("");
+export function PostDilog({ setOpen, open, src }: { setOpen: any, open: boolean, src: string }) {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [selectedFile, setSelectedFile] = useState<string>("");
+    const [inputText, setInputText] = useState<string>("");
 
-  const changeHandler = (e: any) => {
-    setInputText(e.target.value);
-  };
-  const fileImageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const dataUrl = await readFileAsDataUrl(file);
-      setSelectedFile(dataUrl);
+    const changeHandler = (e: any) => {
+        setInputText(e.target.value);
     }
-  };
-  const postActionHandler = async (formData: FormData) => {
-    const inputText = formData.get('inputText') as string;
-    try {
-      await createPostAction(inputText, selectedFile);
-    } catch (error) {
-        console.log('error occurred', error);
+
+    const fileChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const dataUrl = await readFileAsDataUrl(file);
+            setSelectedFile(dataUrl);
+        }
     }
-    setInputText("");
-    setOpen(false);
-  };
-  return (
-    <Dialog open={open}>
-      <DialogContent
-        onInteractOutside={() => setOpen(false)}
-        className="sm:max-w-[425px]"
-      >
-        <DialogHeader>
-          <DialogTitle className="flex gap-2">
-            <Profilephoto src={src} />
-            <div>
-              <h1>username</h1>
-              <p className="text-xs">Post to anyone</p>
-            </div>
-          </DialogTitle>
-        </DialogHeader>
-        <form action={postActionHandler}>
-          <div className="flex flex-col">
-            <Textarea
-              id="name"
-              name="inputText"
-              value={inputText}
-              onChange={changeHandler}
-              className="border-none text-lg focus-visible:ring-0"
-              placeholder="Type your message here."
-            />
-            <div className="my-4">
-              {selectedFile && (
-                <Image
-                  src={selectedFile}
-                  alt="preview-image"
-                  width={400}
-                  height={400}
-                />
-              )}
-            </div>
-          </div>
-          <DialogFooter>
-            <div className="flex items-center gap-4">
-              <input
-                onChange={fileImageHandler}
-                ref={inputref}
-                type="file"
-                name="image"
-                className="hidden"
-                accept="image/*"
-              />
-              <Button type="submit">Post</Button>
-            </div>
-          </DialogFooter>
-        </form>
-        <Button
-          onClick={() => inputref?.current?.click()}
-          variant={"ghost"}
-          className="hover:bg-gray-200 gap-2"
-        >
-          <Images className="text-blue-500" />
-          <p>Media</p>
-        </Button>
-      </DialogContent>
-    </Dialog>
-  );
-};
-export default PostDilog;
+    const postActionHandler = async (formData: FormData) => {
+        const inputText = formData.get('inputText') as string;
+        try {
+            await createPostAction(inputText, selectedFile);
+        } catch (error) {
+            console.log('error occurred', error);
+        }
+        setInputText("");
+        setOpen(false);
+    }
+
+    return (
+        <Dialog open={open}>
+            <DialogContent onInteractOutside={() => setOpen(false)} className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle className="flex gap-2">
+                        <ProfilePhoto src={src} />
+                        <div>
+                            <h1>Patel Mern Stack</h1>
+                            <p className="text-xs">Post to anyone</p>
+                        </div>
+                    </DialogTitle>
+                </DialogHeader>
+                <form action={(formData) => {
+                    const promise = postActionHandler(formData);
+                    toast.promise(promise, {
+                        loading:'Creating post...',
+                        success:'Post created',
+                        error:'Failed to create post'
+                    })
+                }}>
+                    <div className="flex flex-col">
+                        <Textarea
+                            id="name"
+                            name="inputText"
+                            value={inputText}
+                            onChange={changeHandler}
+                            className="border-none text-lg focus-visible:ring-0"
+                            placeholder="Type your message here."
+                        />
+                        <div className="my-4">
+                            {
+                                selectedFile && (
+                                    <Image
+                                        src={selectedFile}
+                                        alt="preview-image"
+                                        width={400}
+                                        height={400}
+                                    />
+                                )
+                            }
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <div className="flex items-center gap-4">
+                            <input ref={inputRef} onChange={fileChangeHandler} type="file" name="image" className="hidden" accept="image/*" />
+                            <Button type="submit">Post</Button>
+                        </div>
+                    </DialogFooter>
+                </form>
+                <Button className="gap-2" onClick={() => inputRef?.current?.click()} variant={'ghost'}>
+                    <Images className="text-blue-500" />
+                    <p>Media</p>
+                </Button>
+            </DialogContent>
+        </Dialog>
+    )
+}

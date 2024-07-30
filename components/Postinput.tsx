@@ -2,10 +2,7 @@
 import { useState } from 'react'
 import Profilephoto from './shared/Profilephoto'
 import { Input } from './ui/input'
-import PostDilog from './PostDilog'
-
-
-
+import { PostDilog } from './PostDilog'
 const Postinput = ({user} : {user:any}) => {
     const [open, setOpen] = useState<boolean>(false);
     const inputHandler = () => {

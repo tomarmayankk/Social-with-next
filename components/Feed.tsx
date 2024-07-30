@@ -1,13 +1,16 @@
 import React from 'react'
-import Posts from './Posts'
 import Postinput from './Postinput'
+import Posts from './Posts'
+import { getAllPosts } from '@/lib/serveractions';
 
-const Feed = ({user} : {user: any}) => {
-  const plainUser = JSON.parse(JSON.stringify(user));
+const Feed = async ({user}:{user:any}) => {
+    const plainUser = JSON.parse(JSON.stringify(user));
+    const posts = await getAllPosts();
+    
   return (
     <div className='flex-1'>
-      <Postinput user = {plainUser}/>
-      <Posts/>
+        <Postinput user={plainUser}/>
+        <Posts posts = {posts!}/>
     </div>
   )
 }

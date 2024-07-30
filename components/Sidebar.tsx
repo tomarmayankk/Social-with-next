@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import React from 'react'
 import Profilephoto from './shared/Profilephoto'
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { SignInButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
+import { getAllPosts } from '@/lib/serveractions';
 
-const Sidebar = ({user}: {user:any}) => {
+const Sidebar = async ({user}: {user:any}) => {
+  const posts = await getAllPosts();
   return (
     <div className='hidden md:block w-[20%] h-fit border border-gray-300 rounded'>
       <div className='flex relative flex-col items-center'>
@@ -36,13 +38,9 @@ const Sidebar = ({user}: {user:any}) => {
         </div>
       </div>
       <div className='text-xs font-semibold'>
-          <div className='w-full flex justify-between items-center px-3 py-2 gap-2'>
-            <p>Post Impressions</p>
-            <p className='text-blue-500'>88</p>
-          </div>
           <div className='w-full flex justify-between items-center px-3 py-2'>
             <p>Posts</p>
-            <p className='text-blue-500'>0</p>
+            <p className='text-blue-500'>{posts.length}</p>
           </div>
         </div>
     </div>

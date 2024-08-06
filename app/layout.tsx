@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
           <html lang="en">
-      <body className={`${inter.className} bg-[#F4F2EE] min-h-screen flex flex-col`}>
+      <body className={`${inter.className} bg-[#e5ecfb] min-h-screen flex flex-col`}>
         <Navbar />
         <div className="flex-1 w-full">
           <main className="max-w-6xl mx-auto">

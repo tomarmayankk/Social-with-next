@@ -48,20 +48,17 @@ const SocialOptions = ({ post }: { post: IPostDocument }) => {
   return (
     <div>
       <div className='flex items-center m-1 justify-between border-b border-gray-300'>
-        <Button onClick={likeOrDislikeHandler} variant={'ghost'}className='flex items-center gap-1 rounded-lg text-gray-600 hover:text-black'>
-          <ThumbsUp className={`${liked && 'fill-[#414243]'}`}/>
+        <Button onClick={likeOrDislikeHandler} variant={'ghost'}className='flex items-center gap-1 rounded-lg text-#222223 hover:text-black'>
+          <ThumbsUp className={`${liked && 'fill-[#5271ff]'}`}/>
           {
-            (likes && likes.length > 0) && (<p className='text-xm text-gray-500 hover:text-blue-500 hover:underline hover:cursor-pointer'>{likes.length} likes</p>)
+            (likes && likes.length > 0) && (<p className='text-xm text-#222223 hover:text-blue-500 hover:cursor-pointer'>{likes.length} likes</p>)
           }
         </Button>
-        <Button onClick={() => setCommentOpen(!commentOpen)} variant={'ghost'}className='flex items-center gap-1 rounded-lg text-gray-600 hover:text-black'>
+        <Button onClick={() => setCommentOpen(!commentOpen)} variant={'ghost'}className='flex items-center gap-1 rounded-lg text-#222223 hover:text-black'>
           <MessageCircle/>
           {
-                    (post.comments && post.comments.length > 0) && (<p onClick={()=>setCommentOpen(!commentOpen)} className='text-xm text-gray-500 hover:text-blue-500 hover:underline hover:cursor-pointer'>{post.comments.length} message</p>)
+                    (post.comments && post.comments.length > 0) && (<p onClick={()=>setCommentOpen(!commentOpen)} className='text-xm text-#222223 hover:text-blue-500 hover:cursor-pointer'>{post.comments.length} Comments</p>)
                 }
-        </Button>
-        <Button  variant={'ghost'}className='flex items-center gap-1 rounded-lg text-gray-600 hover:text-black'>
-          <Repeat/>
         </Button>
       </div>
       {

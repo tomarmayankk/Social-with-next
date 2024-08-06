@@ -18,18 +18,8 @@ const navitems:NAVITEMS[] = [
   {
     src: "/network",
     icon: <User />,
-    text: "network"
+    text: "Friends"
   },
-  {
-    src: "/job",
-    icon: <Briefcase/>,
-    text: "Briefcase"
-  },
-  {
-    src: "/messages",
-    icon: <MessageCircle />,
-    text: "message"
-  }
 ]
 //main function to return the component
 const Navitems = () => {
@@ -38,7 +28,7 @@ const Navitems = () => {
       {
         navitems.map((navitems, index) => {//map the array with idex to render all the elements in the array
           return (
-            <div key={index} className='flex flex-col items-center cursor-pointer text-[#6666]'>
+            <div key={index} className='flex flex-col items-center cursor-pointer text-[#222223]'>
               <span>{navitems.icon}</span>
               <Link className= 'text-xs' href={navitems.src}>{navitems.text}</Link>
             </div>

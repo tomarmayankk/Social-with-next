@@ -7,20 +7,16 @@ interface NAVITEMS {
 }
 const newsItems: NAVITEMS[] = [
   {
-    heading: "E-retailer retag health drinks",
-    subHeading: "4h ago - 345 readers"
+    heading: "  Create a Post",
+    subHeading: "Shar your thoughts!"
   },
   {
-    heading: "Lets transport raises $22 million",
-    subHeading: "4h ago - 323 readers"
+    heading: "Like a post",
+    subHeading: "You can like your friend's post"
   },
   {
-    heading: "Casual waer is in at India Inc",
-    subHeading: "4h ago - 234 readers"
-  },
-  {
-    heading: "Snaller cities go on loans",
-    subHeading: "4h ago - 112 readers"
+    heading: "Comment on Post",
+    subHeading: "Express your opinions with comments"
   },
 ]
 
@@ -28,7 +24,7 @@ const News = () => {
   return (
     <div className='hidden md:block w-[25%] bg-white h-fit rounded-lg border border-gray-300'>
       <div className='flex items-center justify-between p-3'>
-        <h1 className='font-medium'>LinkedIn News</h1>
+        <h1 className='font-medium'>Updates</h1>
         <Info size={18} />
       </div>
       <div>

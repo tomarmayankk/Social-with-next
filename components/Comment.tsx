@@ -9,10 +9,9 @@ const Comment = ({ comment }: { comment: ICommentDocument }) => {
             <div className='mt-2'>
                 <ProfilePhoto src={comment?.user?.profilePhoto!} />
             </div>
-            <div className='flex flex-1 justify-between p-3 bg-[#F2F2F2]'>
+            <div className='flex flex-1 justify-between p-3 bg-[#e5ecfb]'>
                 <div>
                     <h1 className='text-sm font-medium'>{`${comment?.user?.firstName} ${comment?.user?.lastName}`}</h1>
-                    <p className='tex-xm text-gray-500'>@{comment?.user?.firstName}</p>
                     <p className='my-2'>{comment.textMessage}</p>
                 </div>
                 <div>

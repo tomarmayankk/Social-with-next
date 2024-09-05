@@ -35,7 +35,7 @@ const Post = ({ post }: { post: IPostDocument }) => {
                     {
                         loggedInUser && (
                             <Button onClick={() => {
-                                const promise = deletePostAction(post._id);
+                                const promise = deletePostAction(post._id as string);
                                 toast.promise(promise, {
                                     loading:'Deleting post...',
                                     success:'Post deleted successfully',

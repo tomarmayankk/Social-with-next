@@ -14,5 +14,4 @@ const Comments = ({post}:{post:IPostDocument}) => {
     </div>
   )
 }
-
 export default Comments
